@@ -1,5 +1,25 @@
-import { createStore } from "redux";
+// import { createStore } from "redux";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 
+const toDos = createSlice({
+  name: "toDosReducer",
+  initialState: [],
+  reducers: {
+    add: (state, action) => {
+      state.push({ text: action.payload, id: Date.now() });
+    },
+    remove: (state, action) =>
+      state.filter((toDo) => toDo.id !== action.payload)
+  }
+});
+
+//! createSlice will return an objext with "name" || "reducer" || "actions"
+export const { add, remove } = toDos.actions;
+
+//! configureStore can let me see Redux Dev Tools in Chrome
+export default configureStore({ reducer: toDos.reducer });
+
+/*
 const ADD = "ADD";
 const DELETE = "DELETE";
 
@@ -36,3 +56,4 @@ export const actionCreators = {
 };
 
 export default store;
+*/
